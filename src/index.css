@@ -1,0 +1,394 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', system-ui, sans-serif;
+  transition: background 0.5s;
+  background: #000;
+  color: #fff;
+}
+
+/* Themes */
+body.t-graphite, .app-container.t-graphite { background: #1c1c1e; color: #f0f0f0; }
+body.t-slate, .app-container.t-slate { background: #1e2230; color: #e6e9f4; }
+body.t-dusk, .app-container.t-dusk { background: #221830; color: #e0d4f4; }
+body.t-ocre, .app-container.t-ocre { background: #26180a; color: #f0d898; }
+body.t-amber, .app-container.t-amber { background: #2a1a04; color: #fce0a0; }
+body.t-rust, .app-container.t-rust { background: #2a1208; color: #f4c898; }
+body.t-clay, .app-container.t-clay { background: #7a4e30; color: #fde0c0; }
+body.t-sienna, .app-container.t-sienna { background: #4a2c18; color: #f8d4a8; }
+body.t-sage, .app-container.t-sage { background: #263022; color: #cce4c0; }
+body.t-moss, .app-container.t-moss { background: #1e2a1a; color: #c0d8b8; }
+body.t-fog, .app-container.t-fog { background: #e0dcd4; color: #282420; }
+body.t-sand, .app-container.t-sand { background: #ccc0a4; color: #28200e; }
+body.t-stone, .app-container.t-stone { background: #b8b0a0; color: #222018; }
+body.t-chalk, .app-container.t-chalk { background: #eee8e0; color: #242018; }
+body.t-light, .app-container.t-light { background: #f2f2f7; color: #1c1c1e; }
+
+.app-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: background 0.5s;
+}
+
+/* Screens */
+.screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* Tabs */
+.tabs {
+  position: fixed;
+  bottom: max(14px, env(safe-area-inset-bottom, 14px));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 3px;
+  background: rgba(10, 10, 14, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 0.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 28px;
+  padding: 5px 6px;
+  z-index: 100;
+  transition: opacity 0.2s;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  border-radius: 22px;
+  padding: 8px 16px;
+  color: rgba(255, 255, 255, 0.38);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.tab.active {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.tab:active {
+  opacity: 0.55;
+}
+
+/* Timer Inputs */
+.task-input {
+  width: 100%;
+  padding: 11px 16px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 0.5px solid rgba(255, 160, 60, 0.35);
+  border-radius: 14px;
+  color: inherit;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.task-input::placeholder {
+  color: rgba(255, 160, 60, 0.38);
+}
+
+.task-input:focus {
+  border-color: rgba(255, 160, 60, 0.75);
+}
+
+.preset-btn {
+  border: 0.5px solid rgba(255, 160, 60, 0.36);
+  background: rgba(255, 160, 60, 0.09);
+  border-radius: 14px;
+  padding: 6px 13px;
+  color: rgba(255, 160, 60, 0.88);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.12s;
+}
+
+.preset-btn:active {
+  transform: scale(0.94);
+}
+
+.preset-btn.selected {
+  background: rgba(255, 140, 30, 0.22);
+  border-color: rgba(255, 140, 30, 0.7);
+}
+
+.t-input {
+  width: 60px;
+  height: 40px;
+  border-radius: 12px;
+  border: 0.5px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+  color: inherit;
+  text-align: center;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  outline: none;
+}
+
+.t-input:focus {
+  border-color: rgba(255, 140, 30, 0.7);
+}
+
+.t-colon {
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(255, 160, 60, 0.75);
+}
+
+.t-set-btn {
+  padding: 8px 16px;
+  border-radius: 13px;
+  border: none;
+  background: linear-gradient(135deg, #ff9f0a, #ff375f);
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.t-set-btn:active {
+  opacity: 0.72;
+}
+
+.t-btn {
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.13s, opacity 0.13s;
+}
+
+.t-btn:active {
+  transform: scale(0.91);
+  opacity: 0.65;
+}
+
+.t-btn.main {
+  width: 62px;
+  height: 62px;
+  background: linear-gradient(135deg, #ff9f0a, #ff375f);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(255, 100, 0, 0.38);
+}
+
+.t-btn.secondary {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 0.5px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.alarm-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.06);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 7px 11px;
+  cursor: pointer;
+}
+
+.alarm-item-info {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 220, 140, 0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60%;
+}
+
+.alarm-item-time {
+  font-size: 12px;
+  color: rgba(255, 180, 80, 0.55);
+}
+
+.alarm-del {
+  background: none;
+  border: none;
+  color: rgba(255, 80, 80, 0.65);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.alarm-del:active {
+  opacity: 0.5;
+}
+
+/* Theme Panel */
+.swatch {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2.5px solid transparent;
+  transition: transform 0.15s, border-color 0.15s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 4px;
+}
+
+.swatch span {
+  font-size: 8px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.swatch:active {
+  transform: scale(0.88);
+}
+
+.swatch.active {
+  border-color: #fff;
+  transform: scale(1.08);
+}
+
+.close-panel {
+  padding: 10px 30px;
+  border-radius: 22px;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.8);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.close-panel:active {
+  opacity: 0.6;
+}
+
+/* Hint */
+.hint {
+  position: fixed;
+  bottom: max(64px, calc(env(safe-area-inset-bottom, 0px) + 56px));
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 99;
+}
+
+/* Landscape Mode */
+@media (orientation: landscape) {
+  .tabs {
+    bottom: auto;
+    top: 50%;
+    left: auto;
+    right: max(12px, env(safe-area-inset-right, 12px));
+    transform: translateY(-50%);
+    flex-direction: column;
+    gap: 2px;
+    border-radius: 24px;
+    padding: 6px 4px;
+    background: rgba(10, 10, 14, 0.65);
+  }
+
+  .tab {
+    padding: 10px 12px;
+    font-size: 18px;
+  }
+
+  .hint {
+    display: none;
+  }
+}
+
+/* Landscape Mode Override (Manual Toggle) */
+.app-container.landscape-mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-container.landscape-mode .screen.active {
+  flex: 1;
+}
+
+.app-container.landscape-mode .tabs {
+  position: fixed;
+  right: 12px;
+  left: auto;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  flex-direction: column;
+}
+
+/* Timer animation */
+.timer-display.finished {
+  animation: pulse 0.55s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    filter: drop-shadow(0 0 10px rgba(255, 50, 50, 0.4));
+  }
+  to {
+    filter: drop-shadow(0 0 38px rgba(255, 50, 50, 0.92));
+  }
+}
+
+/* Touch handling */
+.task-input,
+.t-input {
+  touch-action: manipulation;
+}
